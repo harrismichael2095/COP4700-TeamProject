@@ -6,7 +6,7 @@ Technical Requirements:
 operations/constraints, ER-model, the relational model, normalization, implementation, 
 indexing, enforcing general constraints (e.g., triggers), etc.  
 2. The database must include at least 5 relational tables. 
-3. The application must have a browser-based interface and can be deployed on Internet. 
+3. The application must have a browser-based interface and can be deployed on Internet. (LocalHost is fine)
 Moreover, the application should have a professional-looking interface that is user-
 friendly. 
 4. The website and database must be able to support multiple concurrent users. 
