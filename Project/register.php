@@ -12,7 +12,7 @@ if (array_key_exists('login', $_POST)) {
         $boom = explode('@', $email);
         $school = array_pop($boom);
         // Insert query
-        $sql = "INSERT INTO `users` (`userId`, `email`, `school`, `userName`, `password`) VALUES (NULL, '$email', '$school', '$userName', '$password') ";
+        $sql = "INSERT INTO `user` (`user_id`, `email`, `school`, `username`, `password`) VALUES (NULL, '$email', '$school', '$userName', '$password') ";
         $results = $mysqli->query($sql);
         if ($results == false) {
             echo ("Email or UserName already in use.");

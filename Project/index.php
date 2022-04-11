@@ -10,14 +10,14 @@ if (array_key_exists('register', $_POST)) {
 } else if (array_key_exists('signIn', $_POST)) {
     $userName = $_POST['username'];
     $password = $_POST['password'];
-    $sql = "SELECT users.userId FROM users WHERE (users.userName = '$userName' AND users.password = '$password')";
+    $sql = "SELECT user.user_id FROM user WHERE (user.username = '$userName' AND user.password = '$password')";
     $results = $mysqli->query($sql);
     if ($results == false) {
         echo ("Incorrect username or password");
     } else {
         while($row = $results->fetch_assoc()){
-            echo($row['userId'] );
-            $_SESSION['userID'] = $row['userId'];
+            echo($row['user_id'] );
+            $_SESSION['userID'] = $row['user_id'];
             header("Location: http://localhost/Project/home");
             }
         }  
