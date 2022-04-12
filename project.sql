@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 11, 2022 at 01:23 AM
+-- Generation Time: Apr 12, 2022 at 12:03 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -43,10 +43,12 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 DROP TABLE IF EXISTS `apart`;
 CREATE TABLE IF NOT EXISTS `apart` (
+  `apart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `RSO_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  KEY `RSO_id` (`RSO_id`)
+  PRIMARY KEY (`apart_id`),
+  KEY `RSO_id` (`RSO_id`),
+  KEY `user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -117,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `private_event` (
   `events_id` int(11) NOT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `super_admin_id` int(11) DEFAULT NULL,
+  `school` int(11) NOT NULL,
   PRIMARY KEY (`events_id`),
   KEY `admin_id` (`admin_id`),
   KEY `super_admin_id` (`super_admin_id`)
@@ -131,9 +134,7 @@ CREATE TABLE IF NOT EXISTS `private_event` (
 DROP TABLE IF EXISTS `public_event`;
 CREATE TABLE IF NOT EXISTS `public_event` (
   `event_id` int(11) NOT NULL,
-  `RSO_id` int(11) NOT NULL,
-  PRIMARY KEY (`event_id`),
-  KEY `RSO_id` (`RSO_id`)
+  PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -148,6 +149,7 @@ CREATE TABLE IF NOT EXISTS `rso` (
   `admin_id` int(11) NOT NULL,
   `name` char(50) DEFAULT NULL,
   PRIMARY KEY (`RSO_id`),
+  UNIQUE KEY `name` (`name`),
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -212,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -223,7 +225,8 @@ INSERT INTO `user` (`user_id`, `email`, `school`, `username`, `password`) VALUES
 (2, '2@mat.com', 'mat.com', 'matt', 'att'),
 (3, 'test@test.com', 'test.com', 'wwww', 'rr'),
 (4, 'w@error.com', 'error.com', 'wwwww', 'www'),
-(5, 'www@er.com', 'er.com', 'matthew', 'w');
+(5, 'www@er.com', 'er.com', 'matthew', 'w'),
+(6, 'nawras@knights.ucf.edu', 'knights.ucf.edu', 'Nawras', 'rq');
 
 --
 -- Constraints for dumped tables
@@ -268,7 +271,6 @@ ALTER TABLE `private_event`
 -- Constraints for table `public_event`
 --
 ALTER TABLE `public_event`
-  ADD CONSTRAINT `public_event_ibfk_1` FOREIGN KEY (`RSO_id`) REFERENCES `rso` (`RSO_id`),
   ADD CONSTRAINT `public_event_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
 
 --
