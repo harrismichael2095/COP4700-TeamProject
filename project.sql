@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 12, 2022 at 12:03 AM
+-- Generation Time: Apr 12, 2022 at 11:47 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -33,7 +33,14 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `admin_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`admin_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`user_id`, `admin_id`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -43,13 +50,20 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 DROP TABLE IF EXISTS `apart`;
 CREATE TABLE IF NOT EXISTS `apart` (
-  `apart_id` int(11) NOT NULL,
+  `apart_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `RSO_id` int(11) NOT NULL,
   PRIMARY KEY (`apart_id`),
   KEY `RSO_id` (`RSO_id`),
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `apart`
+--
+
+INSERT INTO `apart` (`apart_id`, `user_id`, `RSO_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +105,16 @@ CREATE TABLE IF NOT EXISTS `event` (
   UNIQUE KEY `location` (`location`),
   UNIQUE KEY `date_time` (`date_time`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`event_id`, `name`, `admin_id`, `catagory`, `description`, `email`, `phone`, `date_time`, `location`) VALUES
+(1, 'Party Time', 1, 'fun', 'party time', 'ucf.edu', '999-999-9999', '2022-04-12 22:21:20', NULL),
+(2, 'rso Time', 1, 'rso', 'rso event', 'ucf.edu', NULL, '2022-04-12 22:24:08', NULL),
+(3, 'private party', 1, 'private', 'private event', 'ucf.edu', NULL, '2022-04-13 18:24:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -116,14 +139,21 @@ CREATE TABLE IF NOT EXISTS `location` (
 
 DROP TABLE IF EXISTS `private_event`;
 CREATE TABLE IF NOT EXISTS `private_event` (
-  `events_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `super_admin_id` int(11) DEFAULT NULL,
-  `school` int(11) NOT NULL,
-  PRIMARY KEY (`events_id`),
+  `school` varchar(50) NOT NULL,
+  PRIMARY KEY (`event_id`) USING BTREE,
   KEY `admin_id` (`admin_id`),
   KEY `super_admin_id` (`super_admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `private_event`
+--
+
+INSERT INTO `private_event` (`event_id`, `admin_id`, `super_admin_id`, `school`) VALUES
+(3, 1, NULL, '@ucf.edu');
 
 -- --------------------------------------------------------
 
@@ -136,6 +166,13 @@ CREATE TABLE IF NOT EXISTS `public_event` (
   `event_id` int(11) NOT NULL,
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `public_event`
+--
+
+INSERT INTO `public_event` (`event_id`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -153,6 +190,13 @@ CREATE TABLE IF NOT EXISTS `rso` (
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `rso`
+--
+
+INSERT INTO `rso` (`RSO_id`, `admin_id`, `name`) VALUES
+(1, 1, 'clubtime');
+
 -- --------------------------------------------------------
 
 --
@@ -166,6 +210,13 @@ CREATE TABLE IF NOT EXISTS `rso_event` (
   PRIMARY KEY (`event_id`),
   KEY `RSO_id` (`RSO_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rso_event`
+--
+
+INSERT INTO `rso_event` (`event_id`, `RSO_id`) VALUES
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -265,7 +316,7 @@ ALTER TABLE `event`
 ALTER TABLE `private_event`
   ADD CONSTRAINT `private_event_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
   ADD CONSTRAINT `private_event_ibfk_2` FOREIGN KEY (`super_admin_id`) REFERENCES `super_admin` (`super_admin_id`),
-  ADD CONSTRAINT `private_event_ibfk_3` FOREIGN KEY (`events_id`) REFERENCES `event` (`event_id`);
+  ADD CONSTRAINT `private_event_ibfk_3` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
 
 --
 -- Constraints for table `public_event`
