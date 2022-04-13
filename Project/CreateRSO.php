@@ -5,7 +5,7 @@
 
 require_once('connect.php');			 
 session_start(); 				
-if ($_SESSION['userID'] == -1) {		
+if ($_SESSION['user_id'] == -1) {		
     header("Location: http://localhost/Project/index");
 }
 

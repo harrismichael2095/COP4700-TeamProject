@@ -3,7 +3,7 @@
 
 require('connect.php');
 session_start(); // get stored values
-if ($_SESSION['userID'] == -1) {
+if ($_SESSION['user_id'] == -1) {
     header("Location: http://localhost/Project/index");
 }
 
@@ -13,10 +13,10 @@ if ($_SESSION['admin_id'] == -1) {
 // End of Code required to be logged in
 
 
-// These 2 echoes Tell us UserID and AdminID of the current user. Can use this to create new RSO.
+// These 2 echoes Tell us user_id and AdminID of the current user. Can use this to create new RSO.
         echo ' <div class="alert alert-success
 			alert-dismissible fade show" role="alert">
-			<strong>User ID:</strong>'.$_SESSION['userID'].'
+			<strong>User ID:</strong>'.$_SESSION['user_id'].'
 			<button type="button" class="close"
 				data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true"></span>
@@ -33,7 +33,7 @@ if ($_SESSION['admin_id'] == -1) {
 		</div> ';
 
 
-$user_id = $_SESSION["userID"]; // store the current userID so we can use it to make current user Admin or Super Admin or both
+$user_id = $_SESSION["user_id"]; // store the current user_id so we can use it to make current user Admin or Super Admin or both
 $exists=false;
 
 
@@ -52,7 +52,7 @@ if(isset($_POST['admin'])) {
 $sql = "Select * from admin where user_id='$user_id'"; // Check to see if User ID is in the admin table already
 $result = mysqli_query($conn, $sql);
 $num = mysqli_num_rows($result); // if num == 0 user id is not in the admin table. We can make this user an admin.   
-if($num==0)                      // if num  > 0  userid is in the database already. Already and Admin cant use the same userId.
+if($num==0)                      // if num  > 0  user_id is in the database already. Already and Admin cant use the same user_id.
 {
     if($exists==false){
     $sql = "INSERT INTO `admin` (`user_id`) VALUE ($user_id)";
@@ -174,7 +174,7 @@ if(isset($_POST['SuperAdmin'])) {
         
      
        <a href="createRSO.php"><strong>Create RSO</strong></a> 
-     
+	   <a href="viewEvents.php"><strong>View Events</strong></a>
 
     <h1><a class = "text-center" href="http://localhost/Project/index">Log Out</a> </h1>
 

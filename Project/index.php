@@ -2,9 +2,9 @@
 // $mysqli    // = conection to database
 require_once('connect.php');
 session_start(); // get stored values
-$_SESSION['userID'] = -1;   // -1 means user is not logged in
+$_SESSION['user_id'] = -1;   // -1 means user is not logged in
 $_SESSION['admin_id'] = -1;
-
+$_SESSION['school'] = "";
 
 if (array_key_exists('register', $_POST)) {
     header("Location: http://localhost/Project/register");
@@ -18,15 +18,17 @@ if (array_key_exists('register', $_POST)) {
     } else {
         while($row = $results->fetch_assoc()){
             echo($row['user_id'] );
-            $_SESSION['userID'] = $row['user_id'];
+            $_SESSION['user_id'] = $row['user_id'];
+			//save school to find accessable private events
+			$_SESSION['school'] = $row['school'];
 
             header("Location: http://localhost/Project/home");
             }
-        }  
+          
 
 
-        //Save Admin ID like userID so user can use it so create new RSO
-        $user_id = $_SESSION["userID"];
+        //Save Admin ID like user_id so user can use it so create new RSO
+        $user_id = $_SESSION["user_id"];
         $sql = "SELECT admin.admin_id FROM admin WHERE (admin.user_id = $user_id)";
         $test = $mysqli->query($sql);                       
         if($test == false){ echo ("This user is not an Admin yet");
@@ -37,9 +39,8 @@ if (array_key_exists('register', $_POST)) {
             $_SESSION['admin_id'] = $row['admin_id'];
             header("Location: http://localhost/Project/home");
         }
-    }
-
-    
+		}
+	}	
 }
 ?>
 
